@@ -63,3 +63,11 @@ export const login = async (req, res) => {
     data: { user, token },
   });
 };
+
+// GET /api/auth/me
+export const getMe = async (req, res) => {
+  res.status(200).json({
+    success: true,
+    data: { user: req.user },
+  });
+};
