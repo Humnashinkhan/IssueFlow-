@@ -3,9 +3,10 @@ import {
   ISSUE_PRIORITIES,
   ISSUE_TYPES,
 } from '../utils/constants';
+import { SearchIcon } from './Icons';
 
 const controlClass =
-  'rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500';
+  'rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20';
 
 function FilterSelect({ name, label, value, options, onChange }) {
   return (
@@ -35,14 +36,17 @@ export default function IssueFilters({
 }) {
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <input
-        type="search"
-        placeholder="Search by title..."
-        aria-label="Search by title"
-        value={searchInput}
-        onChange={(e) => onSearchChange(e.target.value)}
-        className={`${controlClass} w-full sm:w-64`}
-      />
+      <div className="relative w-full sm:w-72">
+        <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+        <input
+          type="search"
+          placeholder="Search by title..."
+          aria-label="Search by title"
+          value={searchInput}
+          onChange={(e) => onSearchChange(e.target.value)}
+          className={`${controlClass} w-full pl-9`}
+        />
+      </div>
       <FilterSelect
         name="status"
         label="All statuses"

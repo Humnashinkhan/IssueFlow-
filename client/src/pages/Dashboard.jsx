@@ -9,14 +9,22 @@ import DashboardCard from '../components/DashboardCard';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 import EmptyState from '../components/EmptyState';
+import {
+  StackIcon,
+  DotIcon,
+  ClockIcon,
+  CheckIcon,
+  XCircleIcon,
+  FlagIcon,
+} from '../components/Icons';
 
 const CARDS = [
-  { key: 'total', label: 'Total Issues', accent: 'text-gray-900' },
-  { key: 'open', label: 'Open', accent: 'text-blue-600' },
-  { key: 'inProgress', label: 'In Progress', accent: 'text-yellow-600' },
-  { key: 'resolved', label: 'Resolved', accent: 'text-green-600' },
-  { key: 'closed', label: 'Closed', accent: 'text-gray-500' },
-  { key: 'highPriority', label: 'High Priority', accent: 'text-red-600' },
+  { key: 'total', label: 'Total issues', icon: StackIcon, tint: 'bg-slate-100 text-slate-700' },
+  { key: 'open', label: 'Open', icon: DotIcon, tint: 'bg-blue-50 text-blue-600' },
+  { key: 'inProgress', label: 'In progress', icon: ClockIcon, tint: 'bg-amber-50 text-amber-600' },
+  { key: 'resolved', label: 'Resolved', icon: CheckIcon, tint: 'bg-green-50 text-green-600' },
+  { key: 'closed', label: 'Closed', icon: XCircleIcon, tint: 'bg-slate-100 text-slate-500' },
+  { key: 'highPriority', label: 'High priority', icon: FlagIcon, tint: 'bg-red-50 text-red-600' },
 ];
 
 export default function Dashboard() {
@@ -57,16 +65,16 @@ export default function Dashboard() {
     content = (
       <>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-          {CARDS.map(({ key, label, accent }) => (
-            <DashboardCard key={key} label={label} value={stats[key]} accent={accent} />
+          {CARDS.map(({ key, label, icon, tint }) => (
+            <DashboardCard key={key} label={label} value={stats[key]} icon={icon} tint={tint} />
           ))}
         </div>
 
         <section>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Recent issues</h2>
+            <h2 className="text-lg font-semibold text-slate-900">Recent issues</h2>
             <Link to="/issues" className="text-sm font-medium text-indigo-600 hover:underline">
-              View all
+              View all &rarr;
             </Link>
           </div>
 
@@ -75,27 +83,30 @@ export default function Dashboard() {
               title="No issues yet"
               message="Issues you create will show up here."
               action={
-                <Link to="/issues" className="font-medium text-indigo-600 hover:underline">
+                <Link to="/issues" className="btn-primary">
                   Go to issues
                 </Link>
               }
             />
           ) : (
-            <ul className="divide-y divide-gray-100 rounded-xl border border-gray-200 bg-white">
+            <ul className="divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
               {stats.recentIssues.map((issue) => (
-                <li key={issue._id} className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+                <li
+                  key={issue._id}
+                  className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 transition hover:bg-slate-50"
+                >
                   <div className="min-w-0">
                     <Link
                       to={`/issues/${issue._id}`}
-                      className="font-medium text-gray-900 hover:text-indigo-600"
+                      className="font-medium text-slate-900 hover:text-indigo-600"
                     >
                       {issue.title}
                     </Link>
-                    <p className="text-xs text-gray-500">
+                    <p className="mt-0.5 text-xs text-slate-500">
                       by {issue.createdBy?.name ?? 'Unknown'} &middot; {formatDate(issue.createdAt)}
                     </p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <TypeBadge value={issue.type} />
                     <StatusBadge value={issue.status} />
                     <PriorityBadge value={issue.priority} />
@@ -110,10 +121,10 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-sm text-gray-500">Welcome back, {user?.name}.</p>
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900">Dashboard</h1>
+        <p className="mt-1 text-sm text-slate-500">Welcome back, {user?.name}.</p>
       </div>
       {content}
     </div>

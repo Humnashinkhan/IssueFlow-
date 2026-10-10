@@ -15,6 +15,7 @@ import IssueForm from '../components/IssueForm';
 import IssueFilters from '../components/IssueFilters';
 import IssueList from '../components/IssueList';
 import Pagination from '../components/Pagination';
+import { PlusIcon } from '../components/Icons';
 
 const PAGE_SIZE = 10;
 const EMPTY_FILTERS = { status: '', priority: '', type: '', sort: 'newest' };
@@ -117,10 +118,8 @@ export default function Issues() {
   );
 
   const newIssueButton = (
-    <button
-      onClick={openCreate}
-      className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700"
-    >
+    <button onClick={openCreate} className="btn-primary">
+      <PlusIcon className="h-4 w-4" />
       New Issue
     </button>
   );
@@ -136,7 +135,7 @@ export default function Issues() {
         title="No matching issues"
         message="Try changing or clearing your filters."
         action={
-          <button onClick={handleClear} className="font-medium text-indigo-600 hover:underline">
+          <button onClick={handleClear} className="btn-secondary">
             Clear filters
           </button>
         }
@@ -169,19 +168,26 @@ export default function Issues() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Issues</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Issues</h1>
+          <p className="mt-1 text-sm text-slate-500">
+            Search, filter and manage every issue in one place.
+          </p>
+        </div>
         {newIssueButton}
       </div>
 
-      <IssueFilters
-        searchInput={searchInput}
-        onSearchChange={setSearchInput}
-        filters={filters}
-        onFilterChange={handleFilterChange}
-        onClear={handleClear}
-        hasActiveFilters={hasActiveFilters}
-      />
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <IssueFilters
+          searchInput={searchInput}
+          onSearchChange={setSearchInput}
+          filters={filters}
+          onFilterChange={handleFilterChange}
+          onClear={handleClear}
+          hasActiveFilters={hasActiveFilters}
+        />
+      </div>
 
       <div className="space-y-4">{content}</div>
 
