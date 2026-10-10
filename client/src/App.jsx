@@ -4,6 +4,8 @@ import AppLayout from './layouts/AppLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Issues from './pages/Issues';
+import IssueDetails from './pages/IssueDetails';
 import NotFound from './pages/NotFound';
 
 export default function App() {
@@ -15,6 +17,8 @@ export default function App() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/issues" element={<Issues />} />
+          <Route path="/issues/:id" element={<IssueDetails />} />
         </Route>
       </Route>
 
